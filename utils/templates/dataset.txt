@@ -1,0 +1,11 @@
+{
+    "data": {
+        
+    },
+
+
+    "_config": {
+        "primary_key":[""],
+        "add_time_bounds": true|false
+    }
+}

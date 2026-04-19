@@ -1,0 +1,88 @@
+{
+    "data": {
+    "type": "ITEM",
+    "id": "HEZCLVJXLUTG3HVEOYNCBX5P",
+    "updated_at": "2024-10-03T18:37:17.017Z",
+    "created_at": "2017-04-28T02:22:49.529Z",
+    "version": 1727980637017,
+    "is_deleted": false,
+    "present_at_all_locations": false,
+    "present_at_location_ids": [
+      "ECE9494QMYF7K"
+    ],
+    "item_data": {
+      "name": "Coca-Cola",
+      "is_taxable": true,
+      "ordinal": 0,
+      "tax_ids": [
+        "DQTXNBKXISYESEUEESPFYSHN",
+        "ECNZJNX6KXUBGXQ6UTYUMIIU"
+      ],
+      "variations": [
+        {
+          "type": "ITEM_VARIATION",
+          "id": "EQDEHRQWRCEDSOET5CCNAS6X",
+          "updated_at": "2024-10-03T17:49:59.157Z",
+          "created_at": "2017-04-28T02:22:49.529Z",
+          "version": 1727977799157,
+          "is_deleted": false,
+          "present_at_all_locations": false,
+          "present_at_location_ids": [
+            "ECE9494QMYF7K"
+          ],
+          "item_variation_data": {
+            "item_id": "HEZCLVJXLUTG3HVEOYNCBX5P",
+            "name": "Regular",
+            "ordinal": 1,
+            "pricing_type": "FIXED_PRICING",
+            "price_money": {
+              "amount": 75,
+              "currency": "USD"
+            },
+            "location_overrides": [
+              {
+                "location_id": "ECE9494QMYF7K",
+                "track_inventory": true,
+                "sold_out": true
+              }
+            ],
+            "sellable": true,
+            "stockable": true,
+            "channels": [
+              "CH_pQNrZITmLxjdmBe3SushDNl3fP7HWJncjYrn5PlQuYC"
+            ]
+          }
+        }
+      ],
+      "product_type": "FOOD_AND_BEV",
+      "skip_modifier_screen": false,
+      "ecom_available": true,
+      "ecom_visibility": "VISIBLE",
+      "image_ids": [
+        "FDLR4P6QNS6K2P2VWRYSD6V4"
+      ],
+      "categories": [
+        {
+          "id": "X4CPAFFDLRZ437JBL4447ROU",
+          "ordinal": -2250631582580736
+        }
+      ],
+      "channels": [
+        "CH_pQNrZITmLxjdmBe3SushDNl3fP7HWJncjYrn5PlQuYC"
+      ],
+      "is_archived": false,
+      "reporting_category": {
+        "id": "X4CPAFFDLRZ437JBL4447ROU",
+        "ordinal": -2250631582580736
+      }
+    },
+    "merchant_name": "Jokers Are Wild, LLC",
+    "merchant_id": "0RA43DJCQ130M"
+  },
+
+
+    "_config": {
+        "primary_key":["item_variation_id"],
+        "add_time_bounds": true
+    }
+}

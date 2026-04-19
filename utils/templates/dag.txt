@@ -1,0 +1,78 @@
+import os
+from datetime import datetime, timedelta, timezone
+
+from airflow.operators.empty import EmptyOperator
+from airflow.decorators import dag, task
+from airflow.providers.common.sql.operators.sql import (
+    SQLExecuteQueryOperator as SnowflakeOperator
+)
+
+from {{DAG_FILE}}.operators.{{CUSTOM_OP_NAME}} import {{CUSTOM_OP_NAME}}
+
+
+default_args = {
+    "owner": "DES",
+    "depends_on_past": False,
+    "start_date": datetime(2025, 1, 1),
+    "email_on_failure": True,
+    "email_on_retry": False,
+    "retries": 5,
+    "retry_delay": timedelta(minutes=5),
+}
+
+@dag(
+    dag_id='{{DAG_ID}}',
+    default_args=default_args,
+    catchup=False,
+    max_active_runs=1,
+    max_active_tasks=5,
+    schedule='{{SCHEDULE}}'
+)
+def dag_ingest():
+
+    SNOWFLAKE_CONN_ID = "snowflake_connection"
+    TABLES = {{TABLES}}
+
+
+    # -- INGEST START -- #
+    ingest_start = EmptyOperator(task_id="ingest_start")
+    ingest_complete = EmptyOperator(task_id="ingest_complete")
+
+    ingest_to_snowflake = {{CUSTOM_OP_NAME}}(
+        task_id = "ingest_to_snowflake"
+    )
+    ingest_start >> ingest_to_snowflake >> ingest_complete
+    # -- INGEST END -- #
+
+
+    # -- TRANSFORM START -- #
+    transform_start = EmptyOperator(task_id="transform_start")
+    transform_complete = EmptyOperator(task_id="transform_complete")
+
+    ingest_complete >> transform_start
+
+    for table in TABLES:
+        stage_to_ingest = SnowflakeOperator(
+            task_id=f"{table}_stage_to_ingest",
+            conn_id=SNOWFLAKE_CONN_ID,
+            sql=f"sql/{table}/stage_to_ingest.sql"
+        )
+        ingest_to_cleanse = SnowflakeOperator(
+            task_id=f"{table}_ingest_to_cleanse",
+            conn_id=SNOWFLAKE_CONN_ID,
+            sql=f"sql/{table}/ingest_to_cleanse.sql"
+        )
+        transform_start >> stage_to_ingest >> ingest_to_cleanse >> transform_complete
+    # -- TRANSFORM END -- #
+
+
+_dag = dag_ingest()
+
+if __name__ == "__main__":
+    CONN_FILE_PATH = f"{os.getenv('AIRFLOW_HOME')}/local_connections.yaml"
+    VAR_FILE_PATH = f"{os.getenv('AIRFLOW_HOME')}/local_variables.yaml"
+    _dag.test(
+        conn_file_path=CONN_FILE_PATH,
+        variable_file_path=VAR_FILE_PATH,
+        execution_date=datetime.now(timezone.utc) - timedelta(days=1),
+    )

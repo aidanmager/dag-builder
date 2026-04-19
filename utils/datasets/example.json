@@ -1,0 +1,13 @@
+{
+    "data": {
+        "date": "2025-01-01",
+        "id": "12345",
+        "metric": 158.2
+    },
+
+
+    "_config": {
+        "primary_key":["id", "date"],
+        "add_time_bounds": true
+    }
+}

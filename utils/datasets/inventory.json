@@ -1,0 +1,23 @@
+{
+    "data": {
+        "catalog_object_id": "4JTZG4SWSSQQCGULR7KPQLOT",
+        "catalog_object_type": "ITEM_VARIATION",
+        "state": "IN_STOCK",
+        "location_id": "LNNXM9HJ66XE9",
+        "quantity": "53",
+        "merchant_info": {
+            "name": "test_name",
+            "main_location": {
+                "name": "MAIN LOCATIONS",
+                "address": "123 street"
+            }
+        },
+        "calculated_at": "2024-12-02T18:39:37.915Z"
+    },
+
+
+    "_config": {
+        "primary_key":["calculated_at", "catalog_object_id", "location_id"],
+        "add_time_bounds": false
+    }
+}

@@ -1,0 +1,49 @@
+import requests
+import json
+from tempfile import NamedTemporaryFile
+
+from airflow.models import BaseOperator
+from airflow.hooks.base import BaseHook
+from airflow.providers.snowflake.hooks.snowflake import SnowflakeHook
+
+
+class {{CUSTOM_OP_NAME}}(BaseOperator):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.BASE_URL = ""
+        self.CONN_ID = "{{CONN_ID}}"
+
+    def pre_execute(self, context):
+        conn = BaseHook.get_connection(self.CONN_ID)
+        self.LOGIN = conn.login
+        self.API_KEY = conn.password
+
+        self.HEADERS = None    # fill in
+        self.SF_HOOK = SnowflakeHook(snowflake_conn_id="snowflake_connection").get_conn()
+
+    def save_to_snowflake(self, data_to_upload, filename, obj):
+        with NamedTemporaryFile(
+            prefix=filename, suffix=".json", mode="wb"
+        ) as t:
+            json_str = json.dumps(data_to_upload).encode("utf-8")
+            file_path = t.name
+            t.write(json_str)
+
+        with self.SF_HOOK.cursor() as cursor:
+            cursor.execute(
+                f"PUT 'file://{file_path}' @{{PROJECT_NAME}}_INGEST.{{PROJECT_NAME}}_STAGE/{obj};"
+            )
+            self.SF_HOOK.commit()
+
+
+    def make_get_api_call(self, endpoint:str, payload:dict):
+        url = self.BASE_URL + endpoint
+
+        r = requests.post(url=url, json=payload, headers=self.HEADERS)
+
+    def execute(self, context:dict):
+        # INSERT OWN LOGIC HERE
+        
+        
