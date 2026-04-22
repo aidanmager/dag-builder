@@ -46,4 +46,4 @@ class {{CUSTOM_OP_NAME}}(BaseOperator):
     def execute(self, context:dict):
         # INSERT OWN LOGIC HERE
         
-        
+        return
