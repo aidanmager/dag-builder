@@ -1,8 +1,8 @@
 import os
 from datetime import datetime, timedelta, timezone
 
-from airflow.operators.empty import EmptyOperator
-from airflow.decorators import dag, task
+from airflow.providers.standard.operators.empty import EmptyOperator
+from airflow.sdk import dag
 from airflow.providers.common.sql.operators.sql import (
     SQLExecuteQueryOperator as SnowflakeOperator
 )
