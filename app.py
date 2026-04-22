@@ -36,16 +36,16 @@ with col1:
 with col2:
     st.image("utils/extras/dag_builder_dino_2.png")
 
-project_name = st.text_input("Project Name", 
-                             DEFAULT_PROJECT_NAME)
-database_name = st.text_input("Database Name", 
-                              value=DEFAULT_DATABASE)
-ingest_schema_name = st.text_input("Ingest Schema Name", 
-                                   value=DEFAULT_INGEST_SCHEMA)
+project_name        = st.text_input("Project Name", 
+                                    value=DEFAULT_PROJECT_NAME)
+database_name       = st.text_input("Database Name", 
+                                    value=DEFAULT_DATABASE)
+ingest_schema_name  = st.text_input("Ingest Schema Name", 
+                                    value=DEFAULT_INGEST_SCHEMA)
 cleanse_schema_name = st.text_input("Cleanse Schema Name", 
                                     value=DEFAULT_CLEANSE_SCHEMA)
-stage_name = st.text_input("Ingest Stage Name", 
-                           value=DEFAULT_STAGE)
+stage_name          = st.text_input("Ingest Stage Name",
+                                    value=DEFAULT_STAGE)
 
 cron_schedule = "0 7 * * *"
 
